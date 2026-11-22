@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Material 3 colour tokens per brand (RGB triplets) ---------- */
+:root,
+[data-theme="oneplus"] {
+  --md-primary: 245 5 20; /* OnePlus Red #F50514 */
+  --md-on-primary: 255 255 255;
+  --md-primary-container: 74 14 18;
+  --md-on-primary-container: 255 218 214;
+  --md-secondary: 16 185 129; /* Emerald #10B981 */
+  --md-secondary-container: 9 66 50;
+  --md-on-secondary-container: 167 243 208;
+  --md-surface: 15 17 21; /* #0F1115 */
+  --md-surface-dim: 10 11 14;
+  --md-surface-container: 24 27 33;
+  --md-surface-container-high: 32 36 44;
+  --md-surface-container-highest: 42 47 57;
+  --md-on-surface: 236 238 242;
+  --md-on-surface-variant: 156 163 175;
+  --md-outline: 75 82 96;
+  --md-outline-variant: 44 49 59;
+  --md-success: 16 185 129;
+  --md-warning: 245 158 11;
+  --md-danger: 239 68 68;
+  --font-sans: "Google Sans", "Inter", "Segoe UI Variable", "Segoe UI", "Noto Sans", sans-serif;
+  --font-display: "Google Sans", "Inter", "Segoe UI Variable", sans-serif;
+  --card-border: 1px solid rgb(var(--md-outline-variant) / 0.6);
+  --card-blur: 0px;
+  --radius-card: 1.5rem;
+}
+
+[data-theme="nothing"] {
+  --md-primary: 215 25 33; /* Nothing Red #D71921 */
+  --md-on-primary: 255 255 255;
+  --md-primary-container: 58 14 16;
+  --md-on-primary-container: 255 205 205;
+  --md-secondary: 232 232 232;
+  --md-secondary-container: 39 39 42;
+  --md-on-secondary-container: 244 244 245;
+  --md-surface: 10 10 12; /* #0A0A0C */
+  --md-surface-dim: 5 5 6;
+  --md-surface-container: 24 24 28; /* #18181C */
+  --md-surface-container-high: 31 31 36;
+  --md-surface-container-highest: 39 39 42;
+  --md-on-surface: 244 244 245;
+  --md-on-surface-variant: 161 161 170;
+  --md-outline: 63 63 70;
+  --md-outline-variant: 39 39 42; /* #27272A */
+  --md-success: 74 222 128;
+  --md-warning: 250 204 21;
+  --md-danger: 215 25 33;
+  --font-sans: "Inter", "Segoe UI Variable", "Segoe UI", "Noto Sans", sans-serif;
+  --font-display: "Doto", "Ndot", "JetBrains Mono", "Cascadia Mono", "Consolas", monospace;
+  --card-border: 1px solid rgb(39 39 42);
+  --card-blur: 14px;
+  --radius-card: 1.25rem;
+}
+
+[data-theme="cmf"] {
+  --md-primary: 255 105 0; /* CMF Orange #FF6900 */
+  --md-on-primary: 20 10 0;
+  --md-primary-container: 77 35 4;
+  --md-on-primary-container: 255 220 196;
+  --md-secondary: 148 163 184;
+  --md-secondary-container: 45 52 63;
+  --md-on-secondary-container: 226 232 240;
+  --md-surface: 23 26 31;
+  --md-surface-dim: 16 18 22;
+  --md-surface-container: 31 35 42;
+  --md-surface-container-high: 39 44 53;
+  --md-surface-container-highest: 49 55 66;
+  --md-on-surface: 235 238 242;
+  --md-on-surface-variant: 148 158 172;
+  --md-outline: 82 91 105;
+  --md-outline-variant: 51 58 70;
+  --md-success: 52 211 153;
+  --md-warning: 251 191 36;
+  --md-danger: 248 113 113;
+  --font-sans: "Inter", "Segoe UI Variable", "Segoe UI", "Noto Sans", sans-serif;
+  --font-display: "JetBrains Mono", "Cascadia Mono", "Consolas", monospace;
+  --card-border: 1px solid rgb(var(--md-outline-variant));
+  --card-blur: 0px;
+  --radius-card: 1rem;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: rgb(var(--md-on-surface));
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Browser preview (no Tauri) gets a neutral backdrop so the popover is visible */
+body.web-preview {
+  background: radial-gradient(circle at 30% 20%, #2a2f3a, #0b0c0f 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@layer components {
+  .shell {
+    @apply relative flex h-full w-full flex-col overflow-hidden bg-surface text-on-surface;
+    border-radius: 1.5rem;
+    border: 1px solid rgb(var(--md-outline-variant));
+  }
+  .card {
+    @apply bg-surface-c p-3;
+    border-radius: var(--radius-card);
+    border: var(--card-border);
+    backdrop-filter: blur(var(--card-blur));
+  }
+  .card-title {
+    @apply mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant;
+    font-family: var(--font-display);
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-outline-variant bg-surface-c-high px-2.5 py-1 text-[11px] font-medium text-on-surface-variant transition-colors;
+  }
+  .chip-active {
+    @apply border-transparent bg-primary text-on-primary;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold transition active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-filled {
+    @apply btn bg-primary text-on-primary hover:brightness-110;
+  }
+  .btn-tonal {
+    @apply btn bg-secondary-container text-on-secondary-container hover:brightness-110;
+  }
+  .btn-outline {
+    @apply btn border border-outline text-on-surface hover:bg-surface-c-high;
+  }
+  .select {
+    @apply w-full appearance-none rounded-xl border border-outline-variant bg-surface-c-high px-2.5 py-1.5 text-xs text-on-surface outline-none focus:border-primary;
+  }
+  .num {
+    @apply rounded-lg border border-outline-variant bg-surface-c-high px-1.5 py-0.5 text-center font-mono text-[11px] text-on-surface outline-none focus:border-primary;
+  }
+}
+
+/* Material 3 slider */
+input[type="range"].m3 {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+}
+input[type="range"].m3::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    rgb(var(--md-primary)) 0%,
+    rgb(var(--md-primary)) var(--fill, 50%),
+    rgb(var(--md-surface-container-highest)) var(--fill, 50%)
+  );
+}
+input[type="range"].m3::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  margin-top: -7px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgb(var(--md-on-surface));
+  border: 4px solid rgb(var(--md-primary));
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.5);
+}
+input[type="range"].m3:disabled {
+  opacity: 0.4;
+}
+
+/* vertical slider for hardware EQ */
+input[type="range"].m3-vertical {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 22px;
+  height: 120px;
+}
+input[type="range"].m3-vertical::-webkit-slider-runnable-track {
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgb(var(--md-primary)) 0%,
+    rgb(var(--md-primary)) var(--fill, 50%),
+    rgb(var(--md-surface-container-highest)) var(--fill, 50%)
+  );
+}
+input[type="range"].m3-vertical::-webkit-slider-thumb {
+  margin-top: 0;
+  margin-left: -7px;
+}
+
+.scroll-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: rgb(var(--md-outline-variant));
+  border-radius: 999px;
+}
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pulse-pending {
+  animation: pending 0.9s ease-in-out infinite;
+}
+@keyframes pending {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.dot-matrix {
+  background-image: radial-gradient(rgb(var(--md-on-surface) / 0.08) 1px, transparent 1px);
+  background-size: 6px 6px;
+}
+
+/* tab switch: CSS-only so content is visible even if the animation never runs */
+@keyframes tab-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.tab-enter { animation: tab-enter 0.14s ease-out; }

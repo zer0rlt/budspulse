@@ -1,0 +1,24 @@
+# Compile-checks every Linux-only module (BlueZ/zbus transports, ksni tray, MPRIS, PipeWire)
+# from a Windows host without GTK/WebKit sysroots:
+#   rustup target add x86_64-unknown-linux-gnu
+#   cargo check --target x86_64-unknown-linux-gnu --manifest-path tools/linux-check/Cargo.toml
+[package]
+name = "budspulse-linux-check"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time", "io-util", "net", "process", "fs"] }
+async-trait = "0.1"
+thiserror = "2"
+log = "0.4"
+dirs = "6"
+zbus = { version = "5", default-features = false, features = ["tokio"] }
+libc = "0.2"
+ksni = "0.3"
+futures = "0.3"
