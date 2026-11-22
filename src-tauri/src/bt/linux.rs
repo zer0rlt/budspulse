@@ -91,8 +91,8 @@ pub async fn list_paired() -> Result<Vec<PairedDevice>, String> {
 pub async fn unpair(mac: &str) -> Result<(), String> {
     let conn = Connection::system().await.map_err(|e| e.to_string())?;
     let path = device_path(&conn, mac).await.map_err(|e| e.to_string())?.ok_or("устройство не найдено в BlueZ")?;
-    let adapter = adapter_of(path.as_str()).ok_or("не найден Bluetooth-адаптер устройства")?;
-    let a = Proxy::new(&conn, "org.bluez", adapter, "org.bluez.Adapter1").await.map_err(|e| e.to_string())?;
+    let adapter = adapter_of(path.as_str()).ok_or("не найден Bluetooth-адаптер устройства")?.to_string();
+    let a = Proxy::new(&conn, "org.bluez", adapter.as_str(), "org.bluez.Adapter1").await.map_err(|e| e.to_string())?;
     let r: zbus::Result<()> = a.call("RemoveDevice", &(path,)).await;
     r.map_err(|e| format!("BlueZ RemoveDevice: {e}"))
 }
